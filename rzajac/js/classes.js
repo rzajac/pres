@@ -39,11 +39,17 @@ Point.prototype.move = function(x, y, z)
 	this.z = z || 0;
 };
 
-
+/**
+ * Value object
+ *
+ * @param {number} main
+ * @param {number} aux
+ * @constructor
+ */
 function Val(main, aux)
 {
 	this.main = main || 0;
 	this.aux = aux || 0;
 }
 
-Val.prototype.toString = function() { return this.main; }
+Val.prototype.toString = function() { return this.main; };
