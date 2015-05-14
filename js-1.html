@@ -1,0 +1,1502 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>JavaScript introduction</title>
+
+		<meta name="description" content="JavaScript introduction">
+		<meta name="author" content="Rafal Zajac">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css" id="theme">
+		<link rel="stylesheet" href="rzajac/style.css">
+
+		<!-- Code syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+			<div class="slides">
+
+                <section>
+                    <h1>JavaScript</h1>
+                    <blockquote>The World's Most Misunderstood Programming Language <br/>-- Douglas Crockford</blockquote>
+                </section>
+
+                <section>
+                    <h1>JavaScript</h1>
+                    <h3>Presentation focuses on <a href="http://kangax.github.io/compat-table/es5/" target="_blank">ECMAScript 5</a></h3>
+                </section>
+
+                <!-- Lexical start -->
+                <section>
+                    <section>
+                        <h2>JavaScript Lexical Structure</h2>
+                        <ul>
+                            <li>Unicode version 3 or later</li>
+                            <li>Case sensitive <i>keywords</i> and <i>identifiers</i></li>
+                            <li>Optional semicolons</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>Keywords</h2>
+                        <p>Also called <i>reserved words</i></p>
+                        <p>Cannot be used as <i>identifiers</i></p>
+                    </section>
+
+                    <section>
+                        <h2>Identifiers</h2>
+                        <p>Used to name variables, functions and labels</p>
+                    </section>
+
+                    <section>
+                        <h2>Literal</h2>
+                        <p>Directly appearing data value</p>
+                        <pre class="mono sm" style="box-shadow: none">
+12
+1.2
+"hello world"
+'Hi'
+true
+false
+/javascript/gi     // "regular expression" literal
+null               // Absence of an object
+{ x: 1, y: 2 }     // Object literal
+[1, 2, 3, 4, 5]    // Array literal
+                        </pre>
+                    </section>
+
+                    <section>
+                        <h2>Reserved Words</h2>
+                        <p class="const">break, case, catch, continue, debugger, default, delete, do, else, false, finally, for,
+                            function, if, in, instanceof, new, null, return, switch, this, throw, true, try,
+                            typeof, var, while, with, class, const, enum, export, extends, import, super</p>
+                    </section>
+
+                    <section>
+                        <h2>Reserved Words</h2>
+                        <p>in strict mode</p>
+                        <p class="const">implements, interface, let, package, private, protected, public, static, yield</p>
+                        <p>not allowed as variable, function, or parameter names:</p>
+                        <p class="const">arguments, eval</p>
+                    </section>
+
+                    <section>
+                        <h2>Reserved Words</h2>
+                        <p>Not really reserved but you should avoid them</p>
+                        <p class="const">abstract, boolean, byte, char, class, const, double, enum, export, extends, final,
+                            float, goto, implements, import, int, interface, long, native, package, private, protected, public,
+                            short, static, super, synchronized, throws, transient, volatile</p>
+                    </section>
+
+                    <section>
+                        <h2>Global variables and functions</h2>
+                        <p class="const">arguments, Array, Boolean, Date, decodeURI, decodeURIComponent, encodeURI,
+                            encodeURIComponent, Error, eval, EvalError, Function, Infinity, isFinite, isNaN, JSON,
+                            Math, NaN, Number, Object, parseFloat, parseInt, RangeError, ReferenceError, RegExp,
+                            String, SyntaxError, TypeError, undefined, URIError</p>
+                    </section>
+
+                    <section>
+                        <h2>Comments</h2>
+                        <pre><code data-trim contenteditable>
+// Single line comment
+
+/*
+ * Multiple
+ * line
+ * comment
+ */
+
+var a = 12; // Another single line comment
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2>Optional semicolon trap</h2>
+                        <pre><code data-trim contenteditable data-add-run="js">
+function func1()
+{
+    return
+    123
+}
+
+function func2()
+{
+    return 123
+}
+
+clog( func1() ); /* undefined */
+clog( func2() ); /* 123       */
+                        </code></pre>
+                    </section>
+
+                </section>
+                <!-- Lexical end -->
+
+                <!-- Types definition start -->
+                <section>
+                    <section>
+                        <h2>JavaScript Types</h2>
+                        <p><i class="myColor">primitive types</i> and <i class="myColor">object types</i></p>
+                    </section>
+
+                    <section>
+                        <h2>JavaScript primitive types</h2>
+                        <p class="const">number, string and boolean</p>
+                        <pre><code data-trim contenteditable>
+var msg = 'Hello World!';
+
+var num1 = 123, num2 = 12.56;
+
+var isOpen = false, willOpen = true;
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2>JavaScript primitive types</h2>
+                        <p><span class="myColor">null</span> and <span class="myColor">undefined</span> are also <i>primitive types</i></p>
+                        <pre><code data-trim contenteditable>
+var someVar; /* undefined */
+
+var obj = null;
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <p>Any value that is NOT <i>primitive type</i> is an <strong>OBJECT</strong></p>
+                    </section>
+
+                    <section>
+                        <p><i class="myColor">primitive types</i> are <strong>immutable</strong></p>
+                        <p class="fragment" data-fragment-index="1"><i class="myColor">primitive types</i> are passed by <strong>value</strong></p>
+                        <p class="fragment" data-fragment-index="2"><i class="myColor">object types</i> are passed by <strong>reference</strong></p>
+                    </section>
+
+                    <section>
+                        <p><i class="myColor">primitive types</i> are compared by <strong>value</strong></p>
+                        <p class="fragment" data-fragment-index="1"><i class="myColor">object types</i> are compared by <strong>reference</strong></p>
+                        <pre class="fragment" data-fragment-index="3"><code data-trim contenteditable data-add-run="js">
+var num1 = 1, num2 = 1, num3 = 3
+var obj1 = {x: 1, y: 2}, obj2 = {x: 1, y: 2};
+
+clog( num1 == num2 ); /* true */
+clog( num1 == num3 ); /* false */
+clog( obj1 == obj2 ); /* false */
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2>Wrapper objects</h2>
+                            <p>how come primitive types behave like objects?</p>
+                            <pre><code data-trim contenteditable>
+var s = 'abcdef', f = 12.13, b = true;
+
+s = s.toUpperCase();  /* ( new String(s)  ).toUpperCase()  */
+f = f.toFixed()       /* ( new Number(f)  ).toFixed()      */
+b = b.toString()      /* ( new Boolean(b) ).toString()     */
+                        </code></pre>
+
+                    </section>
+
+                    <section>
+                        <h2>JavaScript object types</h2>
+                        <p class="const">Array(), Boolean(), Date(), Error(), Function(), Math(), Number(), Object(), String(), RegExp()</p>
+                    </section>
+                </section>
+                <!-- Types definition end -->
+
+                <!-- Operators start -->
+                <section>
+                    <section>
+                        <h2>JavaScript Operators</h2>
+                        <p>interesting examples</p>
+                    </section>
+
+                    <section>
+                        <h2>+ operator</h2>
+                        <p>convert to number</p>
+                        <pre><code data-trim contenteditable data-add-run="js">
+clog( +"12" );                   /* 12    */
+clog( +"12.13" );                /* 12.13 */
+clog( +"abc" );                  /* NaN   */
+clog( +[] );                     /* 0     */
+clog( +{} );                     /* NaN   */
+clog( +( new Val(123, 321) ) );  /* 123   */
+
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2>~ operator</h2>
+                        <p>invert bits</p>
+                        <pre><code data-trim contenteditable data-add-run="js">
+clog( ~~12 );       /* 12  */
+clog( ~~"12" );     /* 12  */
+clog( ~~"12.13" );  /* 12  */
+clog( ~~"-12.13" ); /* -12 */
+clog( ~~"abc" );    /* 0   */
+clog( ~~[] );       /* 0   */
+clog( ~~{} );       /* 0   */
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2>! operator</h2>
+                        <p>invert boolean value</p>
+                        <pre><code data-trim contenteditable data-add-run="js">
+clog( !!null );      /* false */
+clog( !!undefined ); /* false */
+clog( !!0 );         /* false */
+clog( !!"" );        /* false */
+clog( !!12 );        /* true  */
+clog( !!"12" );      /* true  */
+clog( !!"12.13" );   /* true  */
+clog( !!"-12.13" );  /* true  */
+clog( !!"abc" );     /* true  */
+clog( !![] );        /* true  */
+clog( !!{} );        /* true  */
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2>==, ===, !=, !== operators</h2>
+                        <p>equality and inequality operators</p>
+                        <pre><code data-trim contenteditable data-add-run="js">
+clog( 1 == 1      );      /* true  */
+clog( 1 == '1'    );      /* true  */
+clog( 1 === '1'   );      /* false */
+clog( '1' === '1' );      /* true  */
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2>&& logical AND operator</h2>
+                        <pre><code data-trim contenteditable data-add-run="js">
+var obj = { x : 33 };
+var p = null;
+
+/* 33: obj is truthy, so return value of obj.x */
+clog( obj && obj.x );
+
+/* null: p is falsy, so return it and don't evaluate p.x */
+clog (p && p.x );
+
+var a = true, b = true;
+
+if (a == b) clog('called'); // Invoke clog() only if a == b
+(a == b) && clog('called'); // This does the same thing
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2>|| logical OR operator</h2>
+                        <pre><code data-trim contenteditable data-add-run="js">
+var obj = {};
+var max = obj.max_width || obj.other_width || 500;
+clog( max ); /* 500 */
+
+function fn(x) {
+    x = x || 123;
+    return x;
+}
+
+clog( fn() ); /* 123 */
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2><span class="keyword">typeof</span> operator</h2>
+                        <pre><code data-trim contenteditable data-add-run="js">
+function example() { return 1; }
+
+clog( typeof undefined ); /* 'undefined' */
+clog( typeof null      ); /* 'object'    */
+clog( typeof true      ); /* 'boolean'   */
+clog( typeof false     ); /* 'boolean'   */
+clog( typeof 123       ); /* 'number'    */
+clog( typeof NaN       ); /* 'number'    */
+clog( typeof 'str'     ); /* 'string'    */
+clog( typeof example   ); /* 'function'  */
+clog( typeof {}        ); /* 'object'    */
+                        </code></pre>
+                    </section>
+
+                </section>
+                <!-- Operators end -->
+
+                <!-- Statements start -->
+                <section>
+                    <section>
+                        <h2>JavaScript Statements</h2>
+                        <p>interesting examples</p>
+                    </section>
+
+                    <section>
+                        <h2>switch statement</h2>
+                        <p>sameness is determined by the === operator</p>
+                        <pre><code data-trim contenteditable data-add-run="js">
+var a = '123';
+
+switch (a) {
+    case 123:
+        clog('case 1');
+        break;
+
+    case '123':
+        clog('case 2');
+        break;
+}
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2><span class="keyword">for/in</span> statement</h2>
+                        <p>Enumerates only the <i>enumerable</i> properties</p>
+                        <pre><code data-trim contenteditable data-add-run="js">
+function forin(name, val){
+    console.groupCollapsed(name);
+    for (var p in val) {
+        clog( p );
+    }
+    console.groupEnd();
+}
+
+forin('object', {x: 12, y: 13, z: undefined, n: null});
+forin('array', [1, 2, 3, 10]);
+forin('string', 'some text');
+forin('number', 123);
+forin('null', null);
+forin('undefined', undefined);
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2><span class="keyword">try/catch/finally</span> statement</h2>
+
+                        <pre><code data-trim contenteditable data-add-run="js">
+function testTry() {
+    try {
+        throw 'WAT?';
+        return 'val0';
+    } catch (e) {
+        clog('Error: ', e)
+        return 'val1';
+    } finally {
+        clog( 'finally' );
+    }
+
+    return 'val2';
+}
+
+clog( testTry() );
+                        </code></pre>
+                    </section>
+
+                </section>
+                <!-- Statements end -->
+
+                <section>
+                    <h2>JavaScript types review</h2>
+                </section>
+
+                <!-- null, undefined start -->
+                <section>
+                    <section>
+                        <h2><span class="keyword">null</span></h2>
+                        <p>A keyword indicating the absence of a value / object</p>
+                        <pre><code data-trim contenteditable data-add-run="js">
+clog( typeof null ); /* 'object' */
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2><span class="keyword">undefined</span></h2>
+                        <ul>
+                            <li>Value of variables that have not been initialized</li>
+                            <li class="fragment" data-fragment-index="1">Value you get when you query an object property or array element that does not exist</li>
+                            <li class="fragment" data-fragment-index="2">Returned by functions that have no return value</li>
+                            <li class="fragment" data-fragment-index="3">Value of function parameters for which no argument is supplied</li>
+                        </ul>
+                        <p class="fragment" data-fragment-index="4"><span class="keyword">undefined</span> is a predefined
+                            global variable (not a language keyword like <span class="keyword">null</span>)
+                            that is initialized to the <span class="keyword">undefined</span> value</p>
+                    </section>
+
+                    <section>
+                        <h2><span class="keyword">null</span> and <span class="keyword">undefined</span></h2>
+                        <p>Are the only values that cannot have properties!</p>
+                        <pre><code data-trim contenteditable data-add-run="js">
+var num = 1, str = 'string', bol = true, nul = null, undef;
+
+clog( num.propName ); /* undefined */
+clog( str.propName ); /* undefined */
+clog( bol.propName ); /* undefined */
+clog( nul.propName );
+clog( undef.propName );
+                        </code></pre>
+                    </section>
+                </section>
+                <!-- null, undefined end  -->
+
+                <!-- Objects start -->
+                <section>
+                    <section>
+                        <h2>Objects</h2>
+                        <p>Fundamental data types</p>
+                        <pre><code data-trim contenteditable>
+var point = {
+    propName1: 'value1',
+    propName2: 'value2'
+};
+                        </code></pre>
+                        <p class="fragment" data-fragment-index="1">unordered collection of <i>properties</i></p>
+                        <p class="fragment" data-fragment-index="2">each of which has a name and a value</p>
+                    </section>
+
+                    <section>
+                        <h2>Object property attributes</h2>
+                        <ul>
+                            <li><i>writable</i> - property value can be set</li>
+                            <li class="fragment" data-fragment-index="1"><i>enumerable</i> - property
+                                name is enumerable</li>
+                            <li class="fragment" data-fragment-index="2"><i>configurable</i> - property
+                                can be deleted or its attributes altered</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>Creating objects</h2>
+                        <pre><code data-trim contenteditable data-add-run="js">
+var o1 = {};
+var o2 = new Object();
+var o3 = Object.create(Object.prototype);
+
+cdir( o1 );
+cdir( o2 );
+cdir( o3 );
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2>Prototypes</h2>
+                        <p>Every object has a prototype</p>
+                        <pre><code data-trim contenteditable data-add-run="js">
+var point = {x: 10, y: 20};
+
+cdir( point );
+                        </code></pre>
+                        <img src="rzajac/js/proto1.png" alt="proto1">
+                    </section>
+
+                    <section>
+                        <h2>Prototypes</h2>
+                        <pre><code data-trim contenteditable data-add-run="js">
+var a = new Array();            cdir( a );
+var d = new Date();             cdir( d );
+var point = new Point(10, 20);  cdir( point );
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2>Prototype chains</h2>
+                        <pre><code data-trim contenteditable data-add-run="js">
+var point1 = new Point(10, 20);  cdir( point1 );
+var point2 = new Point(30, 40);  cdir( point2 );
+                        </code></pre>
+                        <img src="rzajac/js/js_proto.png" alt="proto1" style="background: inherit; border: 0px solid white;">
+                    </section>
+
+                    <section>
+                        <h2>Getting and Setting Properties</h2>
+                        <pre><code data-trim contenteditable data-add-run="js">
+var point = {x: 10, y: 20};
+
+clog( point.x );              /* 10 */
+clog( point['x'] );           /* 10 */
+clog( point.notThere );       /* undefined */
+clog( point['notThere'] );    /* undefined */
+
+point.x = 20;
+point.z = 20;
+cdir( point );
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2>Testing Properties</h2>
+                        <pre><code data-trim contenteditable data-add-run="js">
+var point = new Point(10, 20);
+clog( 'notThere' in point );                /* false */
+clog(  point.hasOwnProperty('notThere') );  /* false */
+clog(  point.hasOwnProperty('x') );         /* true  */
+clog(  point.hasOwnProperty('toString') );  /* false */
+clog(  point.hasOwnProperty('set') );       /* true  */
+
+clog(  point.propertyIsEnumerable('toString') );  /* false */
+clog(  point.propertyIsEnumerable('set') );       /* true  */
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2>Testing Properties</h2>
+                        <pre><code data-trim contenteditable data-add-run="js">
+var point = new Point(10, 20);
+
+var name = point && point.name && point.name.length
+clog( name ); /* undefined */
+
+point.name = 'Kraków';
+name = point && point.name && point.name.length
+
+clog( name ); /* 6 */
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2>Enumerating Properties</h2>
+                        <pre><code data-trim contenteditable data-add-run="js">
+var point = new Point(10, 20);
+
+for(var p in point) {
+    clog( p )
+}
+                        </code></pre>
+                    </section>
+
+                </section>
+                <!-- Objects end -->
+
+                <!-- Booleans start -->
+                <section>
+                    <h2>Boolean Values</h2>
+                    <p>Any JavaScript value can be converted to a boolean value</p>
+                    <p class="fragment" data-fragment-index="1">The following values convert to <span class="myColor">false</span>:</p>
+                    <p class="fragment myColor" data-fragment-index="1">undefined, null, 0, -0, NaN, ""</p>
+                    <p class="fragment" data-fragment-index="2">All other values convert to <span class="myColor">true</span></p>
+                </section>
+                <!-- Booleans end -->
+
+                <!-- Strings start -->
+                <section>
+                    <section>
+                        <h2>String</h2>
+                        <ul>
+                            <li>immutable ordered sequence of 16-bit values</li>
+                            <li class="fragment" data-fragment-index="1">all methods working on strings return new string</li>
+                            <li class="fragment" data-fragment-index="2">values typically represent a Unicode character</li>
+                            <li class="fragment" data-fragment-index="3">strings can be treated like read-only arrays</li>
+                        </ul>
+                        <pre class="fragment" data-fragment-index="3"><code data-trim contenteditable data-add-run="js">
+var msg = 'Hello World!';
+
+clog( msg[6] ); /* W */
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2>Working with strings</h2>
+                        <pre><code data-trim contenteditable data-add-run="js">
+// Concatenate
+var msg1 = 'Hello ' + 'World!';
+var msg2 = 'Hello '.concat('World!');
+
+clog( msg1 );
+clog( msg2 );
+
+// Check equality
+clog( msg1 === msg2 ); /* true */
+
+// Check inequality
+var msg3 = 'Hello Rafal';
+clog( msg1 > msg3 ); /* true */
+
+// Compare length
+clog( msg1.length > msg3.length ); /* true */
+
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2>String methods #1</h2>
+                        <pre><code data-trim contenteditable data-add-run="js">
+var msg = 'Hello World!';
+
+// get the Nth character from a string
+clog( msg.charAt(1) ); /* e */
+
+// get the Nth character code from a string
+clog( msg.charCodeAt(1) ); /* 101 */
+
+// concatenate strings
+clog( msg.concat('!!') ); /* Hello World!!! */
+
+// create a string from character encodings
+clog( String.fromCharCode(104, 101, 108, 108, 111) ); /* hello */
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2>String methods #2</h2>
+                        <p class="myColor">String.indexOf(substring[, start])</p>
+                        <p>search a string</p>
+                        <pre><code data-trim contenteditable data-add-run="js">
+//         012345678901
+var msg = 'Hello World!';
+
+clog( msg.indexOf('World') ); /*  6 */
+clog( msg.indexOf('l') );     /*  2 */
+clog( msg.indexOf('l', 5) );  /*  9 */
+clog( msg.indexOf('R') );     /* -1 */
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2>String methods #3</h2>
+                        <p class="myColor">String.lastIndexOf(substring[, start])</p>
+                        <p>search a string backward</p>
+                        <pre><code data-trim contenteditable data-add-run="js">
+//         012345678901
+var msg = 'Hello World!';
+
+clog( msg.lastIndexOf('World') ); /*  6 */
+clog( msg.lastIndexOf('l') );     /*  9 */
+clog( msg.lastIndexOf('l', 5) );  /*  3 */
+clog( msg.lastIndexOf('R') );     /* -1 */
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2>String methods #4</h2>
+                        <p class="myColor">String.localeCompare()</p>
+                        <p>compare one strings using locale-specific ordering</p>
+
+                        <pre><code data-trim contenteditable data-add-run="js">
+var strings = ['ał', 'al', 'ak', 'am'];
+
+strings.sort();
+clog ( strings ); /* ['ak', 'al', 'am', 'ał'] */
+
+strings.sort(function(a, b) { return a.localeCompare(b) });
+clog ( strings ); /* ['ak', 'al', 'ał', 'am'] */
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2>String methods #5</h2>
+                        <p class="myColor">String.match(regexp)</p>
+                        <p>find one or more regular-expression matches</p>
+                        <pre><code data-trim contenteditable data-add-run="js">
+var msg = '1 plus 2 equals 3';
+
+clog( msg.match(/\d/) );     /* ['1', index: 0, input: '1 plus 2 equals 3'] */
+clog( msg.match(/\d/g) );    /* ['1', '2', '3'] */
+clog( msg.match(/World/g) ); /* null            */
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2>String methods #6</h2>
+                        <p class="myColor">String.replace(regexp, replacement)</p>
+                        <p>replace substring(s) matching a regular expression</p>
+                        <pre><code data-trim contenteditable data-add-run="js">
+var msg = 'Doe, John is reading a book about javaScript';
+
+// Ensure that the capitalization of the word "JavaScript"
+clog( msg = msg.replace(/javascript/i, 'JavaScript') );
+
+// Convert a single name from “Doe, John” format to “John Doe”
+clog( msg = msg.replace(/(\w+)\s*,\s*(\w+)/, "$2 $1") );
+
+// Capitalize the first letter of all words in a string
+msg = msg.replace(/\b\w+\b/g, function (word) {
+    return word.substring(0, 1).toUpperCase() + word.substring(1);
+});
+clog( msg );
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2>String methods #7</h2>
+                        <p class="myColor">String.search(regexp)</p>
+                        <p>search for a regular expression</p>
+                        <pre><code data-trim contenteditable data-add-run="js">
+var msg = 'JavaScript is fun';
+
+clog( msg.search(/script/i) ) /* 4 */
+clog( msg.search(/a(.)a/) )   /* 1 */
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2>String methods #8</h2>
+                        <p class="myColor">String.slice(start, end)</p>
+                        <p>extract a substring</p>
+                        <pre><code data-trim contenteditable data-add-run="js">
+//         0123456
+var msg = 'abcdefg';
+
+clog( msg.slice(0, 4) )   /* abcd */
+clog( msg.slice(2, 4) )   /* cd   */
+clog( msg.slice(4) )      /* efg  */
+clog( msg.slice(3, -1) )  /* def  */
+clog( msg.slice(3, -2) )  /* de   */
+clog( msg.slice(-3, -1) ) /* ef   */
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2>String methods #9</h2>
+                        <p class="myColor">String.split(delimiter, limit)</p>
+                        <p>break a string into an array of strings</p>
+                        <pre><code data-trim contenteditable data-add-run="js">
+var msg = 'John is  reading';
+
+clog( msg.split(' ') )   /* ['John', 'is', '', 'reading'] */
+clog( msg.split(/\s+/) ) /* ['John', 'is', 'reading']     */
+
+clog( 'hello'.split('') )    /* ['h', 'e', 'l', 'l', 'o'] */
+clog( 'hello'.split('', 3) ) /* ['h', 'e', 'l']           */
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2>String methods #10</h2>
+                        <p class="myColor">String.substr(start, limit)</p>
+                        <p>extract a substring</p>
+                        <pre><code data-trim contenteditable data-add-run="js">
+//         0123456
+var msg = 'abcdefg';
+
+clog( msg.substr(2, 2) )  /* cd   */
+clog( msg.substr(3) )     /* defg */
+clog( msg.substr(-3, 2) ) /* ef   */
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2>String methods #11</h2>
+                        <p class="myColor">String.substring(from, to)</p>
+                        <p>return a substring of a string</p>
+                        <p><i>from</i> and <i>to</i> are nonnegative values</p>
+                        <pre><code data-trim contenteditable data-add-run="js">
+//         0123456
+var msg = 'abcdefg';
+
+clog( msg.substring(2, 2) )          /*      */
+clog( msg.substring(3, msg.length) ) /* defg */
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2>String methods #12</h2>
+                        <p>Case manipulation</p>
+                        <pre><code data-trim contenteditable data-add-run="js">
+var msg = 'John is reading';
+
+clog( msg.toLowerCase() )       /* john is reading */
+clog( msg.toLocaleLowerCase() ) /* john is reading */
+clog( msg.toUpperCase() )       /* JOHN IS READING */
+clog( msg.toLocaleUpperCase() ) /* JOHN IS READING */
+                        </code></pre>
+                    </section>
+
+                </section>
+                <!-- String end -->
+
+                <!-- Numbers start -->
+                <section>
+                    <section>
+                        <h2>Numbers</h2>
+                        <ul>
+                            <li>No distinction between integer and floating-point values</li>
+                            <li>Numbers are represented as 64-bit floating-point values</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>Special numeric values</h2>
+                        <p>Infinities</p>
+                        <table class="sm">
+                            <tr>
+                                <td>Number.POSITIVE_INFINITY</td>
+                                <td>Positive infinity</td>
+                            </tr>
+                            <tr>
+                                <td>Infinity</td>
+                                <td>Same as above</td>
+                            </tr>
+                            <tr>
+                                <td>1/0</td>
+                                <td>Same as above</td>
+                            </tr>
+                            <tr>
+                                <td>Number.MAX_VALUE + 1</td>
+                                <td>Evaluates to positive Infinity</td>
+                            </tr>
+                            <tr><td>&nbsp;</td><td>&nbsp;</td></tr>
+                            <tr>
+                                <td>Number.NEGATIVE_INFINITY</td>
+                                <td>Negative infinity</td>
+                            </tr>
+                            <tr>
+                                <td>-Infinity</td>
+                                <td>Same as above</td>
+                            </tr>
+                            <tr>
+                                <td>-1/0</td>
+                                <td>Same as above</td>
+                            </tr>
+                            <tr>
+                                <td>-Number.MAX_VALUE - 1</td>
+                                <td>Evaluates to negative Infinity</td>
+                            </tr>
+                        </table>
+                    </section>
+
+                    <section>
+                        <h2>Special numeric values</h2>
+                        <p>Other</p>
+                        <table class="sm">
+                            <tr>
+                                <td>NaN</td>
+                                <td>Not a number</td>
+                            </tr>
+                            <tr>
+                                <td>Number.NaN</td>
+                                <td>Not a number</td>
+                            </tr>
+                            <tr>
+                                <td>0/0</td>
+                                <td>Evaluates to Not a number</td>
+                            </tr>
+                            <tr><td>&nbsp;</td><td>&nbsp;</td></tr>
+                            <tr>
+                                <td>Number.MIN_VALUE/2</td>
+                                <td>Underflow: evaluates to 0</td>
+                            </tr>
+                            <tr>
+                                <td>-Number.MIN_VALUE/2</td>
+                                <td>Negative zero</td>
+                            </tr>
+                            <tr>
+                                <td>-1/Infinity</td>
+                                <td>Also negative zero</td>
+                            </tr>
+                            <tr>
+                                <td>-0</td>
+                                <td></td>
+                            </tr>
+                        </table>
+                    </section>
+
+                    <section>
+                        <h2>Infinities</h2>
+                        <pre><code data-trim contenteditable data-add-run="js">
+clog(  1/0  );   /*  Infinity */
+clog( -1/-0 );   /*  Infinity */
+clog(  1/-0 );   /* -Infinity */
+clog( -1/0  );   /* -Infinity */
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2>Not numbers</h2>
+                        <pre><code data-trim contenteditable data-add-run="js">
+clog( 0 === -0 );  /* true */
+clog( 'abc'/0  );  /* NaN  */
+clog( 0/0      );  /* NaN  */
+
+clog( NaN == NaN  );  /* false */
+clog( NaN === NaN );  /* false */
+clog( isNaN(0/0)  );  /* true  */
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2>Floating-point rounding errors</h2>
+                        <pre><code data-trim contenteditable data-add-run="js">
+var x = 0.3 - 0.2; /* 0.1 */
+var y = 0.2 - 0.1; /* 0.1 */
+
+clog( x == y )   /* ? */
+clog( x == 0.1 ) /* ? */
+clog( y == 0.1 ) /* ? */
+clog( x, y )     /* ? */
+                        </code></pre>
+                    </section>
+
+                </section>
+                <!-- Numbers end -->
+
+                <!-- Array start -->
+                <section>
+                    <section>
+                        <h2>Array</h2>
+                        <p>Array is an ordered collection of values</p>
+                        <p class="fragment" data-fragment-index="1">Each value is called an <i>element</i>, and each
+                            element has a numeric position in the array, known as its <i>index</i></p>
+                        <p class="fragment" data-fragment-index="2">Index is zero-based</p>
+                    </section>
+
+                    <section>
+                        <h2>Creating arrays</h2>
+                        <pre><code data-trim contenteditable data-add-run="js">
+var a2 = new Array(10);         /* Array with specified lenght */
+var emoty1 = new Array();       /* Array with no elements      */
+var empty2 = [];
+var primes = [2, 3, 5];         /* Array with numeric elements */
+var misc = [ 1.1, true, "a", ]; /* 3 elements + trailing comma */
+
+clog( misc );
+clog( a2 );
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2>Array objects</h2>
+                        <p>Arrays are a specialized kind of object</p>
+                        <p class="fragment" data-fragment-index="1">The square brackets work just like the square brackets used to access object properties</p>
+                        <p class="fragment" data-fragment-index="2">JavaScript converts the numeric array index you
+                            specify to a string — the index 1 becomes the string "1" — then uses that string as a property name</p>
+                    </section>
+
+                    <section>
+                        <h2>Array objects</h2>
+                        <p>There is nothing special about the conversion of the index from a number to a string</p>
+                        <p> You can do that with regular objects, too:</p>
+                        <pre><code data-trim contenteditable>
+var o = {};   // Create a plain object
+o[1] = "one"; // Index it with an integer
+                        </code></pre>
+                        <p class="fragment" data-fragment-index="1">What is special about arrays is that when you use
+                            property names that are non-negative integers, the array automatically maintains the value of the <i>length</i> property for you</p>
+
+                    </section>
+
+                    <section>
+                        <h2>Array length</h2>
+                        <pre><code data-trim contenteditable data-add-run="js">
+var a = [];    clog( a.length ); /* 0 */
+
+a[0] = 0;            clog( a.length ); /* 1 */
+a['my'] = 's';       clog( a.length ); /* 1 */
+a[1] = 1;            clog( a.length ); /* 2 */
+a[6] = 6;            clog( a.length ); /* 7 */
+a["7"] = 7;          clog( a.length ); /* 8 */
+a[-1.25] = -1.25;    clog( a.length ); /* 8 */
+a[-15] = -15;        clog( a.length ); /* 8 */
+
+clog( a );
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2>Array not existant index</h2>
+                        <pre><code data-trim contenteditable data-add-run="js">
+var a = [1, 2, 3];
+clog( a[2] );    /* 3         */
+clog( a[4] );    /* undefined */
+clog( a['my'] ); /* undefined */
+clog( a[-1] );   /* undefined */
+
+/* Just like with not exisitng object properties */ clog('------');
+
+var o = {};
+clog( o.propName    );    /* undefined */
+clog( o['propName'] );    /* undefined */
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2>Adding / deleting array elements</h2>
+                        <pre><code data-trim contenteditable data-add-run="js">
+var a = [1, 2];
+a[2] = 3;      clog( a, a.length );
+delete a[5];   clog( a, a.length );
+delete a[2];   clog( a, a.length );
+a.length = 2;  clog( a, a.length );
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2>Iterating Arrays #1</h2>
+                        <p>array length looked up on every iteration</p>
+                        <pre><code data-trim contenteditable data-add-run="js">
+var a = [1, , null, false, 3];
+for (var x = 0; x < a.length; x++) {
+    clog(a[x]);
+}
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2>Iterating Arrays #2</h2>
+                        <p>array length looked up only once</p>
+                        <pre><code data-trim contenteditable data-add-run="js">
+var a = [1, , null, false, 3];
+for (var x = 0, len = a.length; x < len; x++) {
+    clog(a[x]);
+}
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2>Iterating Arrays #3</h2>
+                        <p>skip nonexistent elements</p>
+                        <pre><code data-trim contenteditable data-add-run="js">
+var a = [1, , null, false, 3];
+for (var x = 0, len = a.length; x < len; x++) {
+    if (a[x] === undefined) continue;
+    clog(a[x]);
+}
+
+clog('---');
+
+for (x in a) {
+    clog(a[x]);
+}
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2>Iterating Arrays #4</h2>
+                        <p>skip enumerable inherited properties</p>
+                        <pre><code data-trim contenteditable data-add-run="js">
+var a = [1, , null, false, 3];
+for (var x in a) {
+    if (!a.hasOwnProperty(i)) continue;
+    // ...
+}
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2>Iterating Arrays #5</h2>
+                        <p>forEach</p>
+                        <pre><code data-trim contenteditable data-add-run="js">
+var a = [1, , null, false, 3];
+a.forEach(function (value, key, array) { clog(arguments) });
+                        </code></pre>
+                        <p>no way to terminate iteration</p>
+                    </section>
+
+                    <section>
+                        <h2>Array methods</h2>
+                        <p class="myColor">Array.concat()</p>
+                        <p>concatenate arrays</p>
+                        <pre><code data-trim contenteditable data-add-run="js">
+var a = [1,2,3];
+clog( a.concat(4, 5)          ) /* [1,2,3,4,5]       */
+clog( a.concat([4,5])         ) /* [1,2,3,4,5]       */
+clog( a.concat([4,5],[6,7])   ) /* [1,2,3,4,5,6,7]   */
+clog( a.concat(4, [5,[6,7]])  ) /* [1,2,3,4,5,[6,7]] */
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2>Array methods</h2>
+                        <p class="myColor">Array.every(predicate[, o])</p>
+                        <p>test whether a predicate is true for every element</p>
+                        <p><i>predicate(array[i], i, array)</i></p>
+                        <pre><code data-trim contenteditable data-add-run="js">
+var a1 = [1, 2, 3].every(function(x) { return x < 5; });
+clog( a1 ); /* true */
+
+var a2 = [1, 2, 3].every(function(x) { return x < 3; });
+clog( a2 ); /* false */
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2>Array methods</h2>
+                        <p class="myColor">Array.filter(predicate[, o])</p>
+                        <p>return array elements that pass a predicate</p>
+                        <p><i>predicate(array[i], i, array)</i></p>
+                        <pre><code data-trim contenteditable data-add-run="js">
+var a1 = [1, 2, 3].filter(function(x) { return x > 1; });
+
+clog( a1 );  /* [2, 3] */
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2>Array methods</h2>
+                        <p class="myColor">Array.forEach(f[, o])</p>
+                        <p>invoke a function for each array element</p>
+                        <p><i>f(array[i], i, array)</i></p>
+                        <pre><code data-trim contenteditable data-add-run="js">
+var a = [1,2,3];
+a.forEach(function(x ,i ,a) { a[i]++; });
+
+clog( a );  /* [2, 3, 4] */
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2>Array methods</h2>
+                        <p class="myColor">Array.indexOf(value[, start])</p>
+                        <p>search an array</p>
+                        <p>the === operator is used to test equality</p>
+                        <pre><code data-trim contenteditable data-add-run="js">
+clog( ['a', 'b', 'c'].indexOf('b')    ) /* 1 */
+clog( ['a', 'b', 'c'].indexOf('d')    ) /* -1 */
+clog( ['a', 'b', 'c'].indexOf('a', 1) ) /* -1 */
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2>Array methods</h2>
+                        <p class="myColor">Array.join(glue)</p>
+                        <p>concatenate array elements to form a string</p>
+                        <pre><code data-trim contenteditable data-add-run="js">
+var a1 = [1, 2, 3];
+
+clog( a1.join()                 );  /* 1,2,3      */
+clog( a1.join(" ")              );  /* 1 2 3      */
+clog( a1.join("")               );  /* 123        */
+clog( (new Array(10)).join('-') );  /* ---------- */
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2>Array methods</h2>
+                        <p class="myColor">Array.lastIndexOf(value[, start])</p>
+                        <p>search backward through an array</p>
+                        <p>the === operator is used to test equality</p>
+                        <pre><code data-trim contenteditable data-add-run="js">
+clog( ['a', 'b', 'c'].lastIndexOf('b')    ) /* 1  */
+clog( ['a', 'b', 'c'].lastIndexOf('d')    ) /* -1 */
+clog( ['a', 'b', 'c'].lastIndexOf('a', 1) ) /* 0  */
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2>Array methods</h2>
+                        <p class="myColor">Array.map(f[, o])</p>
+                        <p>compute new array elements from old</p>
+                        <p>a[i] = f(array[i], i, array)</p>
+                        <pre><code data-trim contenteditable data-add-run="js">
+clog( [1,2,3].map(function(x) { return x*x; }) ); /* [1,4,9] */
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2>Array methods</h2>
+                        <p class="myColor">Array.pop()</p>
+                        <p>remove and return the last element of an array</p>
+                        <p class="myColor">Array.push(value, ...)</p>
+                        <p>append elements to an array</p>
+                        <pre><code data-trim contenteditable data-add-run="js">
+var stack = [];
+
+stack.push(1, 2);
+stack.pop();
+stack.push([4,5]);
+stack.pop()
+
+clog( stack ); /* [1] */
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2>Array methods</h2>
+                        <p class="myColor">Array.reduce(f[, initial])</p>
+                        <p>compute a value from the elements of an array</p>
+                        <pre><code data-trim contenteditable data-add-run="js">
+var r = [1, 2, 3].reduce(function(x, y) { return x + y; })
+clog( r ); /* 6 */
+
+var r = [1, 2, 3].reduce(function(x, y) { return x + y; }, 10)
+clog( r ); /* 16 */
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2>Array methods</h2>
+                        <p class="myColor">Array.reduceRight(f[, initial])</p>
+                        <p>reduce an array from right-to-left</p>
+                        <pre><code data-trim contenteditable data-add-run="js">
+var r = [2, 10, 60].reduceRight(function(x,y) { return x / y; })
+clog( r ); /* 6 */
+
+var r = [5, 2].reduceRight(function(x,y) { return x / y; }, 50)
+clog( r ); /* 5 */
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2>Array methods</h2>
+                        <p class="myColor">Array.reverse()</p>
+                        <p>reverse arrays</p>
+                        <pre><code data-trim contenteditable data-add-run="js">
+var a1 = [1, 2, 3];
+clog( a1.reverse() ); /* 3, 2, 1*/
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2>Array methods</h2>
+                        <p class="myColor">Array.shift()</p>
+                        <p>shift array elements down</p>
+                        <pre><code data-trim contenteditable data-add-run="js">
+var a1 = [1, 2, 3];
+clog( a1.shift(), a1 ); /* 1 [2, 3] */
+clog( a1.shift(), a1 ); /* 2 [3]    */
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2>Array methods</h2>
+                        <p class="myColor">Array.slice(start, end)</p>
+                        <p>return a portion of an array</p>
+                        <pre><code data-trim contenteditable data-add-run="js">
+var a = [1, 2, 3, 4, 5];
+clog( a.slice(0, 3)   ); /* [1, 2, 3] */
+clog( a.slice(3)      ); /* [4, 5] */
+clog( a.slice(1, -1)  ); /* [3, 4, 5] */
+clog( a.slice(-3, -2) ); /* [3] */
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2>Array methods</h2>
+                        <p class="myColor">Array.some(predicate[, o])</p>
+                        <p>test whether a predicate is true for any element</p>
+                        <pre><code data-trim contenteditable data-add-run="js">
+var s = [1,2,3].some(function(x) { return x > 5; });
+clog( s ); /* false */
+
+s = [1,2,3].some(function(x) { return x > 2; });
+clog( s ); /* true */
+
+s = [].some(function(x) { return true; });
+clog( s ); /* false */
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2>Array methods</h2>
+                        <p class="myColor">Array.sort([f])</p>
+                        <pre><code data-trim contenteditable data-add-run="js">
+var a1 = [33, 44, 1111, 222];
+
+// By default sorts in alphabetical order.
+// Temporarily converting them to strings
+// to perform the comparison, if necessary.
+clog( a1.sort() ); /* [1111, 222, 33, 44] */
+
+/* Numerical order: [33, 44, 222, 1111] */
+clog( a1.sort(function(a, b) { return a-b; }) );
+
+/* Reverse numerical order: [1111, 222, 44, 33] */
+clog( a1.sort(function(a, b) { return b-a; }) );
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2>Array methods</h2>
+                        <p class="myColor">Array.splice(start, deleteCount, value, ...)</p>
+                        <p>insert, remove, or replace array elements</p>
+                        <p>Returns: an array containing the elements, if any, deleted from array</p>
+                        <pre><code data-trim contenteditable data-add-run="js">
+var a = [1, 2, 3, 4, 5, 6, 7, 8];
+clog( a.splice(1, 2)       , a); /* [2, 3] [1, 4, 5, 6, 7, 8] */
+clog( a.splice(1, 1)       , a); /* [4] [1, 5, 6, 7, 8]       */
+clog( a.splice(1, 0, 2, 3) , a); /* [] [1, 2, 3, 5, 6, 7, 8]  */
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2>Array methods</h2>
+                        <p class="myColor">Array.unshift(value, ...)</p>
+                        <p>insert elements at the beginning of an array</p>
+                        <p>Returns: the new length of the array</p>
+                        <pre><code data-trim contenteditable data-add-run="js">
+var a = [];
+clog( a.unshift(1)        , a);   /* 1 [1]          */
+clog( a.unshift(22)       , a);   /* 2 [22, 1]      */
+clog( a.shift()           , a);   /* 22 [1]         */
+clog( a.unshift(33, [4, 5]) , a); /* 3 [33, [2], 1] */
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2 class="myColor">filter(), forEach(), every(), map(), some()</h2>
+                        <ul>
+                            <li>length taken before it begins looping</li>
+                            <li class="fragment" data-fragment-index="1">if the invoked function appends new elements to array, those newly-added elements will not be looped over</li>
+                            <li class="fragment" data-fragment-index="2">if the function alters existing elements that have not yet been looped over, it is the altered values that will be passed</li>
+                        </ul>
+                    </section>
+
+                </section>
+                <!-- Array end -->
+
+                <!-- Conversions start -->
+                <section>
+                    <section>
+                        <h2>Type conversions</h2>
+                        <img src="rzajac/js/conv.png" alt="conversions" height="500"/>
+                    </section>
+
+                    <section>
+                        <h2>Type conversion example #1</h2>
+                        <pre><code data-trim contenteditable data-add-run="js">
+var p = new Point(11, 22);
+clog( 'Point: ' + p     ); /* Point: [object Object] */
+clog( 'Point: ' + (p*2) ); /* Point: NaN             */
+
+// To string conversion
+Point.prototype.toString = function() {
+    return this.x + ', ' + this.y;
+}
+
+clog( 'Point: ' + p     ); /* Point: 11, 22  */
+clog( 'Point: ' + (p*2) ); /* Point: NaN     */
+
+// To number conversion
+Point.prototype.valueOf = function() {
+    return this.x + this.y;
+}
+
+clog( 'Point: ' + p     ); /* Point: 33 */
+clog( 'Point: ' + (p*2) ); /* Point: 66 */
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2>Type conversion example #2</h2>
+                        <pre><code data-trim contenteditable data-add-run="js">
+clog( 5 + [] );                /* 5              */
+clog( 5 + [1, 2, 3] );         /* 51, 2, 3       */
+clog( 'Array: ' + [1, 2, 3] ); /* Array: 1, 2, 3 */
+                        </code></pre>
+                    </section>
+
+                </section>
+                <!-- Conversions end -->
+
+                <!-- Scope start -->
+                <section>
+                    <section>
+                        <h2>JavaScript scope</h2>
+                        <p>Global variables are defined throughout the program</p>
+                        <p class="fragment" data-fragment-index="1">Local variables are defined throughout the function in which they are declared, </p>
+                        <p class="fragment" data-fragment-index="2">and any nested functions</p>
+                        <img class="fragment" data-fragment-index="3" src="rzajac/js/scope.gif">
+                    </section>
+
+                    <section>
+                        <h2>Function scope and hoisting</h2>
+                        <pre><code data-trim contenteditable>
+function example() {
+    var i = 10;
+    for (var x = 0; x < i; x++) {
+        var tmp = x * 10;
+    }
+}
+                        </code></pre>
+                        <pre class="fragment" data-fragment-index="1"><code data-trim contenteditable>
+function example() {
+    var i = 10, x, tmp;
+    for (x = 0; x < i; x++) {
+        tmp = x * 10;
+    }
+}
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2>Function scope and hoisting</h2>
+                        <pre><code data-trim contenteditable data-add-run="js">
+var scope = 'global';
+function example() {
+    clog( scope );
+    var scope = 'local';
+    clog( scope );
+}
+example();
+clog( scope );
+                        </code></pre>
+                    </section>
+                </section>
+                <!-- Scope end -->
+
+
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+		<script src="rzajac/code.js"></script>
+		<script src="rzajac/js/classes.js"></script>
+
+		<script>
+
+			// Full list of configuration options available at:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+				// Optional reveal.js plugins
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); },
+                            callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true }
+				]
+			});
+
+            Reveal.addEventListener('slidechanged', function(event) {
+                // event.previousSlide, event.currentSlide, event.indexh, event.indexv
+                var dCode = event.currentSlide.querySelector("code");
+                codeRunner(dCode);
+            } );
+
+            Reveal.addEventListener('fragmentshown', function(event) {
+                var dCode = event.fragment.querySelector("code");
+                codeRunner(dCode);
+            } );
+
+            Reveal.addEventListener( 'ready', function( event ) {
+                // event.currentSlide, event.indexh, event.indexv
+                var dCode = event.currentSlide.querySelector("code");
+                codeRunner(dCode);
+            } );
+
+		</script>
+
+	</body>
+</html>

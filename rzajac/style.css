@@ -1,0 +1,43 @@
+.runButton {
+    position: absolute;
+    bottom: -7px;
+    right: -45px;
+    margin: 0 0 10px 0;
+    padding: 0 10px 0 10px;
+    font-weight: bolder;
+}
+
+.const {
+    font-family: "Bitstream Vera Sans Mono", Courier, monospace !important;
+    color: #B3A9E4;
+}
+
+.mono {
+    font-family: "Bitstream Vera Sans Mono", Courier, monospace !important;
+}
+
+.myColor {
+    color: #B3A9E4 !important;
+}
+
+.reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
+    text-transform: none;
+}
+
+.under {
+    text-decoration: underline;
+}
+
+.sm {
+    font-size: 60% !important;
+}
+
+.reveal .sm p {
+    /*line-height: 0.7 !important;*/
+    margin: 10px 0;
+}
+
+.keyword {
+    font-family: "Courier New", Courier, monospace !important;
+    font-weight: normal !important;
+}
