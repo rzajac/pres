@@ -42,7 +42,11 @@
 
                 <section>
                     <h1>JavaScript</h1>
-                    <p>Object oriented</p>
+                </section>
+
+                <section>
+                    <h2>Part 2</h2>
+                    <p>Functions, Objects</p>
                 </section>
 
                 <section>
@@ -73,7 +77,8 @@ function hypotenuse(a, b) {
                 	</section>
 
                 	<section>
-                		<h2>Immediately invoked function</h2>
+                		<h2>Immediately invoked function expressions</h2>
+                        <p>IIFE</p>
                 		<pre><code data-trim contenteditable data-add-run="js">
 (function fn() {
 	clog('hello');
@@ -149,6 +154,56 @@ var point = {
                     </ul>
                 </section>
                 <!-- Objects end -->
+
+                <!-- Scope start -->
+                <section>
+                    <section>
+                        <h2>JavaScript scope</h2>
+                        <p>Global variables are defined throughout the program</p>
+                        <p class="fragment" data-fragment-index="1">Local variables are defined throughout the function in which they are declared, </p>
+                        <p class="fragment" data-fragment-index="2">and any nested functions</p>
+                        <img class="fragment" data-fragment-index="3" src="rzajac/js/scope.gif">
+                    </section>
+
+                    <section>
+                        <h2>Function scope and hoisting</h2>
+                        <pre><code data-trim contenteditable>
+function example() {
+    var i = 10;
+    for (var x = 0; x < i; x++) {
+        var tmp = x * 10;
+    }
+}
+                        </code></pre>
+                        <pre class="fragment" data-fragment-index="1"><code data-trim contenteditable>
+function example() {
+    var i = 10, x, tmp;
+    for (x = 0; x < i; x++) {
+        tmp = x * 10;
+    }
+}
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2>Function scope and hoisting</h2>
+                        <pre><code data-trim contenteditable data-add-run="js">
+var scope = 'global';
+function example() {
+    clog( scope );
+    var scope = 'local';
+    clog( scope );
+}
+example();
+clog( scope );
+                        </code></pre>
+                    </section>
+                </section>
+                <!-- Scope end -->
+
+                <section>
+                    <h2>END</h2>
+                </section>
 
 			</div>
 		</div>

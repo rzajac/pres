@@ -41,12 +41,16 @@
 			<div class="slides">
 
                 <section>
-                    <h1>JavaScript</h1>
+                    <h2>JavaScript</h2>
                     <blockquote>The World's Most Misunderstood Programming Language <br/>-- Douglas Crockford</blockquote>
                 </section>
 
                 <section>
-                    <h1>JavaScript</h1>
+                    <h2>Part 1</h2>
+                    <p>Structure, Types, Operators, Statments, Objects, Booleans, Strings, Numbers, Arrays, Type casting</p>
+                </section>
+
+                <section>
                     <h3>Presentation focuses on <a href="http://kangax.github.io/compat-table/es5/" target="_blank">ECMAScript 5</a></h3>
                 </section>
 
@@ -82,10 +86,12 @@
 'Hi'
 true
 false
-/javascript/gi     // "regular expression" literal
-null               // Absence of an object
-{ x: 1, y: 2 }     // Object literal
-[1, 2, 3, 4, 5]    // Array literal
+/javascript/gi   // Regular expression literal
+null             // Absence of an object
+{ x: 1, y: 2 }   // Object literal
+[1, 2, 3, 4, 5]  // Array literal
+
+var square = function(x) { return x*x; }; // Function literal
                         </pre>
                     </section>
 
@@ -345,6 +351,21 @@ clog( typeof {}        ); /* 'object'    */
                         </code></pre>
                     </section>
 
+                    <section>
+                        <h2>All operators</h2>
+                        <p>++, --, -, +, ~, !<p>
+                        <p>delete, typeof, void</p>
+                        <p>*, /, %</p>
+                        <p><<, >>, >>></p>
+                        <p><, <=, >, >=</p>
+                        <p>instanceof, in</p>
+                        <p>==, !=, ===, !==</p>
+                        <p>&, ^, |, &&, ||, ?:</p>
+                        <p>=, *=, /=, %=, +=, -=, &=, ^=, |=</p>
+                        <p><<=, >>=, >>>=</p>
+                        <p>,</p>
+                    </section>
+
                 </section>
                 <!-- Operators end -->
 
@@ -416,18 +437,28 @@ clog( testTry() );
                         </code></pre>
                     </section>
 
+                    <section>
+                        <h2>All statments</h2>
+                        <p>var, function</p>
+                        <p>if, else if, switch</p>
+                        <p>while, do/while, for, for/in</p>
+                        <p>label, break, continue, return, throw, try/catch/finally</p>
+                        <p>with, debbuger, "use strict"</p>
+                    </section>
+
                 </section>
                 <!-- Statements end -->
 
                 <section>
-                    <h2>JavaScript types review</h2>
+                    <h2>JavaScript types</h2>
+                    <p></p>
                 </section>
 
                 <!-- null, undefined start -->
                 <section>
                     <section>
                         <h2><span class="keyword">null</span></h2>
-                        <p>A keyword indicating the absence of a value / object</p>
+                        <p>A keyword indicating the absence of a object</p>
                         <pre><code data-trim contenteditable data-add-run="js">
 clog( typeof null ); /* 'object' */
                         </code></pre>
@@ -437,11 +468,12 @@ clog( typeof null ); /* 'object' */
                         <h2><span class="keyword">undefined</span></h2>
                         <ul>
                             <li>Value of variables that have not been initialized</li>
-                            <li class="fragment" data-fragment-index="1">Value you get when you query an object property or array element that does not exist</li>
-                            <li class="fragment" data-fragment-index="2">Returned by functions that have no return value</li>
-                            <li class="fragment" data-fragment-index="3">Value of function parameters for which no argument is supplied</li>
+                            <li class="fragment" data-fragment-index="1">Value of non existing object property</li>
+                            <li class="fragment" data-fragment-index="2">Value of non existing array index</li>
+                            <li class="fragment" data-fragment-index="3">Returned by functions that have no return value</li>
+                            <li class="fragment" data-fragment-index="4">Value of not supplied function parameters</li>
                         </ul>
-                        <p class="fragment" data-fragment-index="4"><span class="keyword">undefined</span> is a predefined
+                        <p class="fragment" data-fragment-index="5"><span class="keyword">undefined</span> is a predefined
                             global variable (not a language keyword like <span class="keyword">null</span>)
                             that is initialized to the <span class="keyword">undefined</span> value</p>
                     </section>
@@ -639,6 +671,15 @@ clog( msg1.length > msg3.length ); /* true */
 
                         </code></pre>
                     </section>
+                </section>
+                <!-- Strings end -->
+
+                <!-- String methods start -->
+                <section>
+
+                    <section>
+                        <h2>String methods</h2>
+                    </section>
 
                     <section>
                         <h2>String methods #1</h2>
@@ -825,7 +866,7 @@ clog( msg.toLocaleUpperCase() ) /* JOHN IS READING */
                     </section>
 
                 </section>
-                <!-- String end -->
+                <!-- String methods end -->
 
                 <!-- Numbers start -->
                 <section>
@@ -1000,7 +1041,7 @@ o[1] = "one"; // Index it with an integer
                     <section>
                         <h2>Array length</h2>
                         <pre><code data-trim contenteditable data-add-run="js">
-var a = [];    clog( a.length ); /* 0 */
+var a = [];          clog( a.length ); /* 0 */
 
 a[0] = 0;            clog( a.length ); /* 1 */
 a['my'] = 's';       clog( a.length ); /* 1 */
@@ -1102,6 +1143,15 @@ var a = [1, , null, false, 3];
 a.forEach(function (value, key, array) { clog(arguments) });
                         </code></pre>
                         <p>no way to terminate iteration</p>
+                    </section>
+                </section>
+                <!-- Array end -->
+
+                <!-- Array methods start -->
+                <section>
+
+                    <section>
+                        <h2>Array methods</h2>
                     </section>
 
                     <section>
@@ -1354,7 +1404,7 @@ clog( a.unshift(33, [4, 5]) , a); /* 3 [33, [2], 1] */
                     </section>
 
                 </section>
-                <!-- Array end -->
+                <!-- Array mehods end -->
 
                 <!-- Conversions start -->
                 <section>
@@ -1400,52 +1450,9 @@ clog( 'Array: ' + [1, 2, 3] ); /* Array: 1, 2, 3 */
                 </section>
                 <!-- Conversions end -->
 
-                <!-- Scope start -->
                 <section>
-                    <section>
-                        <h2>JavaScript scope</h2>
-                        <p>Global variables are defined throughout the program</p>
-                        <p class="fragment" data-fragment-index="1">Local variables are defined throughout the function in which they are declared, </p>
-                        <p class="fragment" data-fragment-index="2">and any nested functions</p>
-                        <img class="fragment" data-fragment-index="3" src="rzajac/js/scope.gif">
-                    </section>
-
-                    <section>
-                        <h2>Function scope and hoisting</h2>
-                        <pre><code data-trim contenteditable>
-function example() {
-    var i = 10;
-    for (var x = 0; x < i; x++) {
-        var tmp = x * 10;
-    }
-}
-                        </code></pre>
-                        <pre class="fragment" data-fragment-index="1"><code data-trim contenteditable>
-function example() {
-    var i = 10, x, tmp;
-    for (x = 0; x < i; x++) {
-        tmp = x * 10;
-    }
-}
-                        </code></pre>
-                    </section>
-
-                    <section>
-                        <h2>Function scope and hoisting</h2>
-                        <pre><code data-trim contenteditable data-add-run="js">
-var scope = 'global';
-function example() {
-    clog( scope );
-    var scope = 'local';
-    clog( scope );
-}
-example();
-clog( scope );
-                        </code></pre>
-                    </section>
+                    <h2>END</h2>
                 </section>
-                <!-- Scope end -->
-
 
 			</div>
 		</div>
