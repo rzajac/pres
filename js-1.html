@@ -549,7 +549,7 @@ cdir( point );
                         <pre><code data-trim contenteditable data-add-run="js">
 var a = new Array();            cdir( a );
 var d = new Date();             cdir( d );
-var point = new Point(10, 20);  cdir( point );
+var p = new Point(10, 20);      cdir( p );
                         </code></pre>
                     </section>
 
@@ -582,11 +582,14 @@ cdir( point );
                         <h2>Testing Properties</h2>
                         <pre><code data-trim contenteditable data-add-run="js">
 var point = new Point(10, 20);
+
 clog( 'notThere' in point );                /* false */
 clog(  point.hasOwnProperty('notThere') );  /* false */
+
 clog(  point.hasOwnProperty('x') );         /* true  */
-clog(  point.hasOwnProperty('toString') );  /* false */
 clog(  point.hasOwnProperty('set') );       /* true  */
+
+clog(  point.hasOwnProperty('toString') );  /* false */
 
 clog(  point.propertyIsEnumerable('toString') );  /* false */
 clog(  point.propertyIsEnumerable('set') );       /* true  */
@@ -598,13 +601,13 @@ clog(  point.propertyIsEnumerable('set') );       /* true  */
                         <pre><code data-trim contenteditable data-add-run="js">
 var point = new Point(10, 20);
 
-var name = point && point.name && point.name.length
+// Test property existance
+var name = point && point.name;
 clog( name ); /* undefined */
 
-point.name = 'Kraków';
-name = point && point.name && point.name.length
-
-clog( name ); /* 6 */
+// Get property value or default value
+var name = name || 'Unknown';
+clog( name ); /* undefined */
                         </code></pre>
                     </section>
 
@@ -1444,6 +1447,8 @@ clog( 'Point: ' + (p*2) ); /* Point: 66 */
 clog( 5 + [] );                /* 5              */
 clog( 5 + [1, 2, 3] );         /* 51, 2, 3       */
 clog( 'Array: ' + [1, 2, 3] ); /* Array: 1, 2, 3 */
+clog( "3" + 4 + 5 );           /* "345"          */
+clog(  3 + 4 + "5" );          /* "75"           */
                         </code></pre>
                     </section>
 

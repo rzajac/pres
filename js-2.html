@@ -1,44 +1,44 @@
 <!doctype html>
 <html lang="en">
 
-	<head>
-		<meta charset="utf-8">
+    <head>
+        <meta charset="utf-8">
 
-		<title>JavaScript OO</title>
+        <title>JavaScript OO</title>
 
-		<meta name="description" content="Rafał Zając presentations">
-		<meta name="author" content="Rafal Zajac">
+        <meta name="description" content="Rafał Zając presentations">
+        <meta name="author" content="Rafal Zajac">
 
-		<meta name="apple-mobile-web-app-capable" content="yes" />
-		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
 
-		<link rel="stylesheet" href="css/reveal.css">
-		<link rel="stylesheet" href="css/theme/black.css" id="theme">
-		<link rel="stylesheet" href="rzajac/style.css">
+        <link rel="stylesheet" href="css/reveal.css">
+        <link rel="stylesheet" href="css/theme/black.css" id="theme">
+        <link rel="stylesheet" href="rzajac/style.css">
 
-		<!-- Code syntax highlighting -->
-		<link rel="stylesheet" href="lib/css/zenburn.css">
+        <!-- Code syntax highlighting -->
+        <link rel="stylesheet" href="lib/css/zenburn.css">
 
-		<!-- Printing and PDF exports -->
-		<script>
-			var link = document.createElement( 'link' );
-			link.rel = 'stylesheet';
-			link.type = 'text/css';
-			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
-			document.getElementsByTagName( 'head' )[0].appendChild( link );
-		</script>
+        <!-- Printing and PDF exports -->
+        <script>
+            var link = document.createElement( 'link' );
+            link.rel = 'stylesheet';
+            link.type = 'text/css';
+            link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+            document.getElementsByTagName( 'head' )[0].appendChild( link );
+        </script>
 
-		<!--[if lt IE 9]>
-		<script src="lib/js/html5shiv.js"></script>
-		<![endif]-->
-	</head>
+        <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+    </head>
 
-	<body>
+    <body>
 
-		<div class="reveal">
-			<div class="slides">
+        <div class="reveal">
+            <div class="slides">
 
                 <section>
                     <h1>JavaScript</h1>
@@ -46,76 +46,94 @@
 
                 <section>
                     <h2>Part 2</h2>
-                    <p>Functions, Objects</p>
+                    <p>Functions, Objects, Inheritance</p>
                 </section>
 
                 <section>
-                	<section>
-                		<h2>Functions</h2>
-                	</section>
+                    <section>
+                        <h2>Functions</h2>
+                    </section>
 
-                	<section>
-                		<h2>Function declarations</h2>
-                		<pre><code data-trim contenteditable>
+                    <section>
+                        <h2>Function declarations</h2>
+                        <pre><code data-trim contenteditable>
 // Function declaration
-function square(x) {return x*x; }
+function square1(x) { return x*x; }
 
 // Function expression
-var square = function(x) { return x*x; };
-var square = function square(x) { return x*x; };
-                        </code></pre>
-                	</section>
+var square2 = function(x) { return x*x; };
+var square3 = function square4(x) { return x*x; };
 
-                	<section>
-                		<h2>Nested functions</h2>
-                		<pre><code data-trim contenteditable>
+function square5(x) {
+    // Return anonymous function
+    return function() {
+        return x*x;
+    }
+}
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2>Nested functions</h2>
+                        <pre><code data-trim contenteditable>
 function hypotenuse(a, b) {
-	function square(x) { return x*x; }
-	return Math.sqrt(square(a) + square(b)); 
+    function square(x) { return x*x; }
+    return Math.sqrt(square(a) + square(b)); 
 }
                         </code></pre>
-                	</section>
+                    </section>
 
-                	<section>
-                		<h2>Immediately invoked function expressions</h2>
+                    <section>
+                        <h2>Immediately invoked function expressions</h2>
                         <p>IIFE</p>
-                		<pre><code data-trim contenteditable data-add-run="js">
-(function fn() {
-	clog('hello');
+                        <pre><code data-trim contenteditable data-add-run="js">
+(function fn() { 
+    clog('hello');
 })();
-                        </code></pre>                		
-                	</section>
+                        </code></pre>                        
+                    </section>
 
-                	<section>
-                		<h2>Closure</h2>
-                		<pre><code data-trim contenteditable data-add-run="js">
-function addToA(a) {
-	return function(x) { 
-		return a + x; 
-	}
+                    <section>
+                        <h2>Scope</h2>
+                        <pre><code data-trim contenteditable data-add-run="js">
+function one() {
+    var one = 1;
+two();
+
+function two() {
+
+three();
+
+function three() {
+alert('I am at function three');
 }
 
-var fn = addToA(5);
+}
 
-clog(  fn(4) );
-clog(  fn(5) );
+}
+
+one();
                         </code></pre>
-                		
-                	</section>
+                    </section>
 
-                	<section>
-                		<h2>Closure</h2>
-                		<pre><code data-trim contenteditable data-add-run="js">
-var myFn = (function fn(x) {
-	return function() { 
-		clog( x ); 
-	}
-})(123);
+                    <section>
+                        <h2>Closure</h2>
+                        <pre><code data-trim contenteditable data-add-run="js">
+function createCounter() {
+    var c = 0;
+    return function() {
+        return c++;
+    }
+}
 
-clog(  myFn() );
+var c1 = createCounter();
+var c2 = createCounter();
+
+clog( c1(), c1(), c1(), c1(), c1() );
+clog( c2(), c2(), c2(), c2(), c2() );
                         </code></pre>
-                		
-                	</section>
+                    </section>
+
 
                 </section>
 
@@ -135,7 +153,7 @@ var point = {
                     </section>
                 </section>
 
-				<section>
+                <section>
                     <h2>Object property attributes</h2>
                     <ul>
                         <li><i>writable</i> - property value can be set</li>
@@ -145,7 +163,7 @@ var point = {
                     </ul>
                 </section>
 
-				<section>
+                <section>
                     <h2>Object attributes</h2>
                     <ul>
                         <li><i>prototype</i> - reference to another object from which properties are inherited</li>
@@ -205,37 +223,37 @@ clog( scope );
                     <h2>END</h2>
                 </section>
 
-			</div>
-		</div>
+            </div>
+        </div>
 
-		<script src="lib/js/head.min.js"></script>
-		<script src="js/reveal.js"></script>
-		<script src="rzajac/code.js"></script>
-		<script src="rzajac/js/classes.js"></script>
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.js"></script>
+        <script src="rzajac/code.js"></script>
+        <script src="rzajac/js/classes.js"></script>
 
-		<script>
+        <script>
 
-			// Full list of configuration options available at:
-			// https://github.com/hakimel/reveal.js#configuration
-			Reveal.initialize({
-				controls: true,
-				progress: true,
-				history: true,
-				center: true,
+            // Full list of configuration options available at:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                history: true,
+                center: true,
 
-				transition: 'slide', // none/fade/slide/convex/concave/zoom
+                transition: 'slide', // none/fade/slide/convex/concave/zoom
 
-				// Optional reveal.js plugins
-				dependencies: [
-					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
-					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-					{ src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); },
+                // Optional reveal.js plugins
+                dependencies: [
+                    { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); },
                             callback: function() { hljs.initHighlightingOnLoad(); } },
-					{ src: 'plugin/zoom-js/zoom.js', async: true },
-					{ src: 'plugin/notes/notes.js', async: true }
-				]
-			});
+                    { src: 'plugin/zoom-js/zoom.js', async: true },
+                    { src: 'plugin/notes/notes.js', async: true }
+                ]
+            });
 
             Reveal.addEventListener('slidechanged', function(event) {
                 // event.previousSlide, event.currentSlide, event.indexh, event.indexv
@@ -254,7 +272,7 @@ clog( scope );
                 codeRunner(dCode);
             } );
 
-		</script>
+        </script>
 
-	</body>
+    </body>
 </html>
