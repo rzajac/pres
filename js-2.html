@@ -53,6 +53,7 @@
                 <section>
                     <section>
                         <h2>Functions</h2>
+                        <p>A <i>function</i> is a block of JavaScript code that is defined once but may be executed, or <i>invoked</i>, any number of times.</p>
                     </section>
 
                     <section>
@@ -85,15 +86,16 @@ function hypotenuse(a, b) {
 
 clog( hypotenuse(2, 3) ); /* 3.6 */
                         </code></pre>
+                        <p><i>square</i> is visible only in <i>hypotenuse</i> function body</p>
                     </section>
 
                     <section>
                         <h2>Functions as values</h2>
                         <pre><code data-trim contenteditable data-add-run="js">
-function square(x) {
+function helloFactory() {
     // Return anonymous function literal
     return function() {
-        return x * x;
+        return 'Hello!';
     }
 }
 
@@ -102,7 +104,7 @@ function exec(fn) {
     clog( fn() );
 }
 
-var fn = square(5);
+var fn = helloFactory();
 exec(fn);
                         </code></pre>                        
                     </section>
@@ -113,7 +115,6 @@ exec(fn);
                         <pre><code data-trim contenteditable data-add-run="js">
 var obj = (function() { 
     
-    // Private variable
     var private = 42;
 
     return {
@@ -135,20 +136,52 @@ clog( obj.meaningOfLife() ); /* 42 */
 ~function() {
     clog(this);
 }();
-
-                        </code></pre>                        
+                        </code></pre>
+                        <p>in strict mode it prints <span class="keyword">undefined</span></p>                   
                     </section>
 
                     <section>
                         <h2>Function object methods</h2>
                         <ul>
-                            <li>Function.arguments</li>
-                            <li class="fragment" data-fragment-index="1">Function.apply(newThis[, args])</li>
-                            <li class="fragment" data-fragment-index="2">Function.bind(newThis[, args...])</li>
-                            <li class="fragment" data-fragment-index="3">Function.call(newThis[, args...])</li>
-                            <li class="fragment" data-fragment-index="4">Function.length</li>
-                            <li class="fragment" data-fragment-index="5">Function.prototype</li>
+                            <li><span class="myColor">Function.arguments</span></li>
+                            <li class="fragment" data-fragment-index="1"><span class="myColor">Function.apply(newThis[, args])</span></li>
+                            <li class="fragment" data-fragment-index="2"><span class="myColor">Function.bind(newThis[, args...])</span></li>
+                            <li class="fragment" data-fragment-index="3"><span class="myColor">Function.call(newThis[, args...])</span></li>
+                            <li class="fragment" data-fragment-index="4"><span class="myColor">Function.length</span></li>
+                            <li class="fragment" data-fragment-index="5"><span class="myColor">Function.prototype</span></li>
                         </ul>
+                    </section>
+
+                    <section>
+                        <h2><span class="keyword">call()</span> and <span class="keyword">apply()</span></h2>
+                        <p>invoke a function as a method of an object</p>
+                        <pre><code data-trim contenteditable data-add-run="js">
+var o1 = {name: 'John'}, o2 = {name: 'Ben'};
+
+function logName(extra) {
+    var extra = extra || 'Man';
+    clog( this.name + ' ' + extra);
+}
+
+logName.call(o1, '!!!');     /* John !!! */
+logName.apply(o2, ['!!!']);  /* Ben  !!! */
+                        </code></pre>    
+                    </section>
+
+                    <section>
+                        <h2><span class="keyword">bind()</span></h2>
+                        <p>return a function that has <i>this</i> bind to passed object</p>
+                        <pre><code data-trim contenteditable data-add-run="js">
+var fn, o1 = {name: 'John'}, o2 = {name: 'Ben'};
+
+function logName(extra) {
+    var extra = extra || 'Man';
+    clog( this.name + ' ' + extra);
+}
+
+fn = logName.bind(o1);          fn(); /* John Man */
+fn = logName.bind(o1, '!!!');   fn(); /* John !!! */
+                        </code></pre>    
                     </section>
 
 
@@ -159,8 +192,8 @@ clog( obj.meaningOfLife() ); /* 42 */
                 <section>
                     <section>
                         <h2>JavaScript scope</h2>
-                        <p><strong>Global variables</strong> - throughout the program</p>
-                        <p class="fragment" data-fragment-index="1"><strong>Local variables</strong> - in function they are declared, </p>
+                        <p><strong>Global variables</strong> - visible throughout the program</p>
+                        <p class="fragment" data-fragment-index="1"><strong>Local variables</strong> - visible in function they are declared, </p>
                         <p class="fragment" data-fragment-index="2">and any nested functions</p>
                     </section>
 
@@ -199,7 +232,7 @@ clog( scope );
                     </section>
 
                     <section>
-                        <h2>Scope</h2>
+                        <h2>Scope chain</h2>
                         <pre><code data-trim contenteditable data-add-run="js">
 var  a = 0;
 function one() {
@@ -212,7 +245,7 @@ function one() {
 
         function three() {
             var d = 3;
-            clog( a, b, c, d); /* 0 1 2 3 */
+            clog( a, b, c, d ); /* 0 1 2 3 */
         }
     }
 }
@@ -229,8 +262,37 @@ one();
 
                 <!-- Closure start -->
                 <section>
-                    <h2>Closure</h2>
-                    <pre><code data-trim contenteditable data-add-run="js">
+
+                    <section>
+                        <h2>Closure</h2>
+                        <p>A function defined in a closure 'remembers' the environment in which it was created</p>
+                    </section>
+
+                    <section>
+                        <h2>Closure</h2>
+                        <pre><code data-trim contenteditable data-add-run="js">
+var  a = 0;
+function one(x) {
+    var b = 1;
+    return two();
+
+    function two() {
+        var c = 2;
+
+        return function() {
+            return '' + a + ' ' + b + ' ' + c + ' ' + x;
+        }
+    }
+}
+
+var fn = one(11);
+clog( fn() );     /* 0 1 2 11 */
+                            </code></pre>
+                    </section>
+
+                    <section>
+                        <h2>Closure</h2>
+                        <pre><code data-trim contenteditable data-add-run="js">
 function createCounter() {
     var c = 0;
     return function() {
@@ -243,7 +305,8 @@ var c2 = createCounter();
 
 clog( c1(), c1(), c1(), c1(), c1() );
 clog( c2(), c2(), c2(), c2(), c2() );
-                    </code></pre>
+                        </code></pre>
+                    </section>
                 </section>
                 <!-- Closure end -->
 
