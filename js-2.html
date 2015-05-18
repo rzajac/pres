@@ -49,6 +49,7 @@
                     <p>Functions, Objects, Inheritance</p>
                 </section>
 
+                <!-- Functions start -->
                 <section>
                     <section>
                         <h2>Functions</h2>
@@ -57,17 +58,18 @@
                     <section>
                         <h2>Function declarations</h2>
                         <pre><code data-trim contenteditable>
-// Function declaration
-function square1(x) { return x*x; }
+// Function statement
+function s1(x) { return x * x; }
 
-// Function expression
-var square2 = function(x) { return x*x; };
-var square3 = function square4(x) { return x*x; };
+// Function literal
+var s2 = function(x) { return x * x; };
+var s3 = function s4(x) { return x * x; };
 
-function square5(x) {
-    // Return anonymous function
+// Function statement
+function s5(x) {
+    // Return anonymous function literal
     return function() {
-        return x*x;
+        return x * x;
     }
 }
                         </code></pre>
@@ -75,112 +77,91 @@ function square5(x) {
 
                     <section>
                         <h2>Nested functions</h2>
-                        <pre><code data-trim contenteditable>
+                        <pre><code data-trim contenteditable  data-add-run="js">
 function hypotenuse(a, b) {
     function square(x) { return x*x; }
     return Math.sqrt(square(a) + square(b)); 
 }
+
+clog( hypotenuse(2, 3) ); /* 3.6 */
                         </code></pre>
                     </section>
 
                     <section>
-                        <h2>Immediately invoked function expressions</h2>
-                        <p>IIFE</p>
+                        <h2>Functions as values</h2>
                         <pre><code data-trim contenteditable data-add-run="js">
-(function fn() { 
-    clog('hello');
-})();
+function square(x) {
+    // Return anonymous function literal
+    return function() {
+        return x * x;
+    }
+}
+
+// Execute passed function
+function exec(fn) {
+    clog( fn() );
+}
+
+var fn = square(5);
+exec(fn);
                         </code></pre>                        
                     </section>
 
                     <section>
-                        <h2>Scope</h2>
+                        <h2>IIFE</h2>
+                        <p>Immediately invoked function expressions</p>
                         <pre><code data-trim contenteditable data-add-run="js">
-function one() {
-    var one = 1;
-two();
+var obj = (function() { 
+    
+    // Private variable
+    var private = 42;
 
-function two() {
+    return {
+        meaningOfLife: function() {
+            return private;
+        }
+    };
+})();
 
-three();
-
-function three() {
-alert('I am at function three');
-}
-
-}
-
-}
-
-one();
-                        </code></pre>
+clog( obj.meaningOfLife() ); /* 42 */
+                        </code></pre>                        
                     </section>
 
                     <section>
-                        <h2>Closure</h2>
+                        <h2>IIFE</h2>
+                        <p>Immediately invoked function expressions</p>
                         <pre><code data-trim contenteditable data-add-run="js">
-function createCounter() {
-    var c = 0;
-    return function() {
-        return c++;
-    }
-}
+/* If you do not care about return value */
+~function() {
+    clog(this);
+}();
 
-var c1 = createCounter();
-var c2 = createCounter();
-
-clog( c1(), c1(), c1(), c1(), c1() );
-clog( c2(), c2(), c2(), c2(), c2() );
-                        </code></pre>
+                        </code></pre>                        
                     </section>
 
-
-                </section>
-
-                <!-- Objects start -->
-                <section>
                     <section>
-                        <h2>Objects</h2>
-                        <p>Fundamental data types</p>
-                        <pre><code data-trim contenteditable>
-var point = {
-    propName1: 'value1',
-    propName2: 'value2'
-};
-                        </code></pre>
-                        <p class="fragment" data-fragment-index="1">unordered collection of <i>properties</i></p>
-                        <p class="fragment" data-fragment-index="2">each of which has a <i>name</i> and a <i>value</i></p>
+                        <h2>Function object methods</h2>
+                        <ul>
+                            <li>Function.arguments</li>
+                            <li class="fragment" data-fragment-index="1">Function.apply(newThis[, args])</li>
+                            <li class="fragment" data-fragment-index="2">Function.bind(newThis[, args...])</li>
+                            <li class="fragment" data-fragment-index="3">Function.call(newThis[, args...])</li>
+                            <li class="fragment" data-fragment-index="4">Function.length</li>
+                            <li class="fragment" data-fragment-index="5">Function.prototype</li>
+                        </ul>
                     </section>
-                </section>
 
-                <section>
-                    <h2>Object property attributes</h2>
-                    <ul>
-                        <li><i>writable</i> - property value can be set</li>
-                        <li class="fragment" data-fragment-index="1"><i>enumerable</i> - property name is enumerable</li>
-                        <li class="fragment" data-fragment-index="2"><i>configurable</i> - property
-                                can be deleted or its attributes altered</li>
-                    </ul>
-                </section>
 
-                <section>
-                    <h2>Object attributes</h2>
-                    <ul>
-                        <li><i>prototype</i> - reference to another object from which properties are inherited</li>
-                        <li class="fragment" data-fragment-index="1"><i>class</i> - is a string that categorizes the type of an object</li>
-                        <li class="fragment" data-fragment-index="2"><i>extensible</i> - flag specifies whether new properties may be added to the object</li>
-                    </ul>
                 </section>
-                <!-- Objects end -->
+                <!-- Functions end -->
 
                 <!-- Scope start -->
                 <section>
                     <section>
                         <h2>JavaScript scope</h2>
-                        <p>Global variables are defined throughout the program</p>
-                        <p class="fragment" data-fragment-index="1">Local variables are defined throughout the function in which they are declared, </p>
+                        <p><strong>Global variables</strong> - throughout the program</p>
+                        <p class="fragment" data-fragment-index="1"><strong>Local variables</strong> - in function they are declared, </p>
                         <p class="fragment" data-fragment-index="2">and any nested functions</p>
-                        <img class="fragment" data-fragment-index="3" src="rzajac/js/scope.gif">
                     </section>
 
                     <section>
@@ -216,8 +197,92 @@ example();
 clog( scope );
                         </code></pre>
                     </section>
+
+                    <section>
+                        <h2>Scope</h2>
+                        <pre><code data-trim contenteditable data-add-run="js">
+var  a = 0;
+function one() {
+    var b = 1;
+    two();
+
+    function two() {
+        var c = 2;
+        three();
+
+        function three() {
+            var d = 3;
+            clog( a, b, c, d); /* 0 1 2 3 */
+        }
+    }
+}
+one();
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2>Scope</h2>
+                        <img src="rzajac/js/scope.png" alt="scope">
+                    </section>
                 </section>
                 <!-- Scope end -->
+
+                <!-- Closure start -->
+                <section>
+                    <h2>Closure</h2>
+                    <pre><code data-trim contenteditable data-add-run="js">
+function createCounter() {
+    var c = 0;
+    return function() {
+        return c++;
+    }
+}
+
+var c1 = createCounter();
+var c2 = createCounter();
+
+clog( c1(), c1(), c1(), c1(), c1() );
+clog( c2(), c2(), c2(), c2(), c2() );
+                    </code></pre>
+                </section>
+                <!-- Closure end -->
+
+                <!-- Objects start -->
+                <section>
+                    <section>
+                        <h2>Objects</h2>
+                        <p>Fundamental data types</p>
+                        <pre><code data-trim contenteditable>
+var point = {
+    propName1: 'value1',
+    propName2: 'value2'
+};
+                        </code></pre>
+                        <p class="fragment" data-fragment-index="1">unordered collection of <i>properties</i></p>
+                        <p class="fragment" data-fragment-index="2">each of which has a <i>name</i> and a <i>value</i></p>
+                    </section>
+
+                    <section>
+                        <h2>Object property attributes</h2>
+                        <ul>
+                            <li><i>writable</i> - property value can be set</li>
+                            <li class="fragment" data-fragment-index="1"><i>enumerable</i> - property name is enumerable</li>
+                            <li class="fragment" data-fragment-index="2"><i>configurable</i> - property
+                                    can be deleted or its attributes altered</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>Object attributes</h2>
+                        <ul>
+                            <li><i>prototype</i> - reference to another object from which properties are inherited</li>
+                            <li class="fragment" data-fragment-index="1"><i>class</i> - is a string that categorizes the type of an object</li>
+                            <li class="fragment" data-fragment-index="2"><i>extensible</i> - flag specifies whether new properties may be added to the object</li>
+                        </ul>
+                    </section>
+                </section>
+                <!-- Objects end -->
+
 
                 <section>
                     <h2>END</h2>
