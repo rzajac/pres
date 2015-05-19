@@ -60,3 +60,13 @@ function className(o)
   var results = (funcNameRegex).exec((o).constructor.toString());
   return (results && results.length > 1) ? results[1] : "";
 }
+
+/**
+ * Enumerate object properties and log to console
+ */
+function enumerate(o)
+{
+  for(var p in o) {
+    clog( p );
+  }
+}

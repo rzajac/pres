@@ -118,7 +118,7 @@ var obj = (function() {
     return {
         meaningOfLife: function() {
             return private;
-    	}
+        }
     };
 })();
 
@@ -134,7 +134,7 @@ clog( obj.meaningOfLife() ); /* 42 */
     clog(this);
 }();
                         </code></pre>
-                        <p>in strict mode it prints <span class="keyword">undefined</span></p>                   
+                        <p>in <i>strict mode</i> it prints <span class="keyword">undefined</span></p>                   
                     </section>
 
                     <section>
@@ -249,7 +249,7 @@ function one() {
 }
 one();
                         </code></pre>
-            			<img src="rzajac/js/scope.png" alt="scope" style="position: absolute; top: 120px;" width="420">
+                        <img src="rzajac/js/scope.png" alt="scope" style="position: absolute; top: 120px;" width="420">
                     </section>
                 </section>
                 <!-- Scope end -->
@@ -264,6 +264,7 @@ one();
 
                     <section>
                         <h2>Closure</h2>
+                        <p>lexical scope</p>
                         <pre><code data-trim contenteditable data-add-run="js">
 var  a = 0;
 function one(x) {
@@ -286,6 +287,7 @@ clog( fn() );     /* 0 1 2 11 */
 
                     <section>
                         <h2>Closure</h2>
+                        <p>immutable counter</p>
                         <pre><code data-trim contenteditable data-add-run="js">
 function createCounter() {
     var c = 0;
@@ -306,11 +308,11 @@ clog( c2(), c2(), c2(), c2(), c2() );
 
                 <!-- Constructors start -->
 
-				<section>
-					<section>
-						<h2>Constructors</h2>
-					</section>
-				</section>
+                <section>
+                    <section>
+                        <h2>Constructors</h2>
+                    </section>
+                </section>
 
                 <!-- Constructors end -->
 
@@ -330,16 +332,6 @@ var point = {
                     </section>
 
                     <section>
-                        <h2>Object property attributes</h2>
-                        <ul>
-                            <li><i>writable</i> - property value can be set</li>
-                            <li class="fragment" data-fragment-index="1"><i>enumerable</i> - property name is enumerable</li>
-                            <li class="fragment" data-fragment-index="2"><i>configurable</i> - property
-                                    can be deleted or its attributes altered</li>
-                        </ul>
-                    </section>
-
-                    <section>
                         <h2>Object attributes</h2>
                         <ul>
                             <li><i>prototype</i> - reference to another object from which properties are inherited</li>
@@ -349,22 +341,76 @@ var point = {
                     </section>
 
                     <section>
-                    	<h2>Property getters and setters</h2>
-                    	<pre><code data-trim contenteditable data-add-run="js">
+                        <h2>Property getters</h2>
+                        <pre><code data-trim contenteditable data-add-run="js">
 var point = {
-	x: 1.0,
-	y: 1.0,
-	
-	get r() { return Math.sqrt(this.x*this.x + this.y*this.y); }, 
-	set r(newvalue) {
-		var oldvalue = Math.sqrt(this.x*this.x + this.y*this.y); var ratio = newvalue/oldvalue;
-		this.x *= ratio;
-		this.y *= ratio;
-	},
-	get theta() { return Math.atan2(this.y, this.x); }
+    x: 1.0,
+    y: 1.0,
+    
+    get r() { return Math.sqrt(this.x * this.x + this.y * this.y) },
+    get theta() { return Math.atan2(this.y, this.x); }
 }
-						</code></pre>
+
+clog( point.r );        /* 1.4           */
+clog( point.theta );    /* 0.78          */
+clog( point.r = 10 );   /* no effect     */
+clog( point.r );        /* 1.4           */
+clog( delete point.r ); /* remove getter */
+clog( point.r );        /* undefined     */
+point.r = 50;           
+clog( point.r );        /* 50            */
+                        </code></pre>
                     </section>
+
+                    <section>
+                        <h2>Property setters</h2>
+                        <pre><code data-trim contenteditable data-add-run="js">
+var point = {
+    x: 1.0,
+    y: 1.0,
+    
+    get r() { return Math.sqrt(this.x * this.x + this.y * this.y) },
+    set r(newvalue) {
+        var oldvalue = Math.sqrt(this.x*this.x + this.y*this.y);
+        var ratio = newvalue / this.r;
+        this.x *= ratio; this.y *= ratio;
+    }
+}
+
+clog( point.r );          /* 1.4               */
+clog( point.r = 10 );     /* set x, y          */
+clog( point.r );          /* 10                */
+clog( point.x, point.y ); /* x: 7.07 , y: 7.07 */
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2>Property attributes</h2>
+                        <ul>
+                            <li><i>writable</i> - property value can be set</li>
+                            <li class="fragment" data-fragment-index="1"><i>enumerable</i> - property name is enumerable</li>
+                            <li class="fragment" data-fragment-index="2"><i>configurable</i> - property
+                                    can be deleted or its attributes altered</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>Setting property attributes</h2>
+                        <pre><code data-trim contenteditable data-add-run="js">
+var p = {x: 1.1};
+
+Object.defineProperty(p, 'x', {
+    writable: true, 
+    enumerable: false, 
+    configurable: true});
+
+clog( p );
+clog( 'x' in p );
+enumerate(p);
+                        </code></pre>
+                    </section>
+
+
                 </section>
                 <!-- Objects end -->
 
