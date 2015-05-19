@@ -67,6 +67,6 @@ function className(o)
 function enumerate(o)
 {
   for(var p in o) {
-    clog( p );
+    clog( p + ':', o[p] );
   }
 }

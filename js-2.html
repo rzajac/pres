@@ -332,15 +332,6 @@ var point = {
                     </section>
 
                     <section>
-                        <h2>Object attributes</h2>
-                        <ul>
-                            <li><i>prototype</i> - reference to another object from which properties are inherited</li>
-                            <li class="fragment" data-fragment-index="1"><i>class</i> - is a string that categorizes the type of an object</li>
-                            <li class="fragment" data-fragment-index="2"><i>extensible</i> - flag specifies whether new properties may be added to the object</li>
-                        </ul>
-                    </section>
-
-                    <section>
                         <h2>Property getters</h2>
                         <pre><code data-trim contenteditable data-add-run="js">
 var point = {
@@ -392,6 +383,7 @@ clog( point.x, point.y ); /* x: 7.07 , y: 7.07 */
                             <li class="fragment" data-fragment-index="2"><i>configurable</i> - property
                                     can be deleted or its attributes altered</li>
                         </ul>
+                        <p class="fragment" data-fragment-index="3">by default all attributes are <i><strong>true</strong></i></p>
                     </section>
 
                     <section>
@@ -400,16 +392,38 @@ clog( point.x, point.y ); /* x: 7.07 , y: 7.07 */
 var p = {x: 1.1};
 
 Object.defineProperty(p, 'x', {
-    writable: true, 
-    enumerable: false, 
-    configurable: true});
+    value: 1.2,            /* optional, default: undefined */
+    writable: true,        /* optional, default: true      */
+    enumerable: false,     /* optional, default: true      */
+    configurable: true});  /* optional, default: true      */
 
-clog( p );
-clog( 'x' in p );
-enumerate(p);
+clog( p ); clog( 'x' in p ); enumerate(p); clog( '---' );
+
+p.x = 2.2; clog( p );
                         </code></pre>
                     </section>
 
+					<section>
+                        <h2>Getting property attributes</h2>
+                        <pre><code data-trim contenteditable data-add-run="js">
+var p = {x: 1.1};
+
+clog( Object.getOwnPropertyDescriptor(p, 'x') );
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2>Object attributes</h2>
+                        <ul>
+                            <li><i>prototype</i> - reference to another object from which properties are inherited</li>
+                            <li class="fragment" data-fragment-index="1"><i>class</i> - is a string that categorizes the type of an object</li>
+                            <li class="fragment" data-fragment-index="2"><i>extensible</i> - flag specifies whether new properties may be added to the object</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                    	<h2></h2>
+                    </section>
 
                 </section>
                 <!-- Objects end -->
