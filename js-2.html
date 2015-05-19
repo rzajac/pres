@@ -111,16 +111,14 @@ exec(fn);
 
                     <section>
                         <h2>IIFE</h2>
-                        <p>Immediately invoked function expressions</p>
+                        <p>Immediately Invoked Function Expressions</p>
                         <pre><code data-trim contenteditable data-add-run="js">
 var obj = (function() { 
-    
     var private = 42;
-
     return {
         meaningOfLife: function() {
             return private;
-        }
+    	}
     };
 })();
 
@@ -130,9 +128,8 @@ clog( obj.meaningOfLife() ); /* 42 */
 
                     <section>
                         <h2>IIFE</h2>
-                        <p>Immediately invoked function expressions</p>
+                        <p>If you do not care about return value</p>
                         <pre><code data-trim contenteditable data-add-run="js">
-/* If you do not care about return value */
 ~function() {
     clog(this);
 }();
@@ -218,7 +215,7 @@ function example() {
                     </section>
 
                     <section>
-                        <h2>Function scope and hoisting</h2>
+                        <h2>Hoisting proof</h2>
                         <pre><code data-trim contenteditable data-add-run="js">
 var scope = 'global';
 function example() {
@@ -245,17 +242,14 @@ function one() {
 
         function three() {
             var d = 3;
-            clog( a, b, c, d ); /* 0 1 2 3 */
+            /* 0 1 2 3 */
+            clog( a, b, c, d ); 
         }
     }
 }
 one();
                         </code></pre>
-                    </section>
-
-                    <section>
-                        <h2>Scope</h2>
-                        <img src="rzajac/js/scope.png" alt="scope">
+            			<img src="rzajac/js/scope.png" alt="scope" style="position: absolute; top: 120px;" width="420">
                     </section>
                 </section>
                 <!-- Scope end -->
@@ -310,6 +304,16 @@ clog( c2(), c2(), c2(), c2(), c2() );
                 </section>
                 <!-- Closure end -->
 
+                <!-- Constructors start -->
+
+				<section>
+					<section>
+						<h2>Constructors</h2>
+					</section>
+				</section>
+
+                <!-- Constructors end -->
+
                 <!-- Objects start -->
                 <section>
                     <section>
@@ -342,6 +346,24 @@ var point = {
                             <li class="fragment" data-fragment-index="1"><i>class</i> - is a string that categorizes the type of an object</li>
                             <li class="fragment" data-fragment-index="2"><i>extensible</i> - flag specifies whether new properties may be added to the object</li>
                         </ul>
+                    </section>
+
+                    <section>
+                    	<h2>Property getters and setters</h2>
+                    	<pre><code data-trim contenteditable data-add-run="js">
+var point = {
+	x: 1.0,
+	y: 1.0,
+	
+	get r() { return Math.sqrt(this.x*this.x + this.y*this.y); }, 
+	set r(newvalue) {
+		var oldvalue = Math.sqrt(this.x*this.x + this.y*this.y); var ratio = newvalue/oldvalue;
+		this.x *= ratio;
+		this.y *= ratio;
+	},
+	get theta() { return Math.atan2(this.y, this.x); }
+}
+						</code></pre>
                     </section>
                 </section>
                 <!-- Objects end -->
