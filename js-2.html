@@ -204,6 +204,7 @@ function example() {
     }
 }
                         </code></pre>
+                        <p class="fragment" data-fragment-index="1">becomes:</p>
                         <pre class="fragment" data-fragment-index="1"><code data-trim contenteditable>
 function example() {
     var i = 10, x, tmp;
@@ -218,11 +219,13 @@ function example() {
                         <h2>Hoisting proof</h2>
                         <pre><code data-trim contenteditable data-add-run="js">
 var scope = 'global';
+
 function example() {
     clog( scope );
     var scope = 'local';
     clog( scope );
 }
+
 example();
 clog( scope );
                         </code></pre>
@@ -235,7 +238,6 @@ var  a = 0;
 function one() {
     var b = 1;
     two();
-
     function two() {
         var c = 2;
         three();
@@ -305,16 +307,6 @@ clog( c2(), c2(), c2(), c2(), c2() );
                     </section>
                 </section>
                 <!-- Closure end -->
-
-                <!-- Constructors start -->
-
-                <section>
-                    <section>
-                        <h2>Constructors</h2>
-                    </section>
-                </section>
-
-                <!-- Constructors end -->
 
                 <!-- Objects start -->
                 <section>
@@ -392,10 +384,10 @@ clog( point.x, point.y ); /* x: 7.07 , y: 7.07 */
 var p = {x: 1.1};
 
 Object.defineProperty(p, 'x', {
-    value: 1.2,            /* optional, default: undefined */
-    writable: true,        /* optional, default: true      */
-    enumerable: false,     /* optional, default: true      */
-    configurable: true});  /* optional, default: true      */
+    value: 1.2,            /* optional                 */
+    writable: true,        /* optional, default: true  */
+    enumerable: false,     /* optional, default: true  */
+    configurable: true});  /* optional, default: true  */
 
 clog( p ); clog( 'x' in p ); enumerate(p); clog( '---' );
 
@@ -422,12 +414,99 @@ clog( Object.getOwnPropertyDescriptor(p, 'x') );
                     </section>
 
                     <section>
-                    	<h2></h2>
+                    	<h2>Extensible attribute</h2>
+                        <p>only affects the extensibility of the object itself, new properties can be added to the prototype </p>
+                        <pre><code data-trim contenteditable data-add-run="js">
+var p = new Point(11, 22);
+clog( p ); clog( Object.isExtensible(p) );
+
+Object.preventExtensions(p);
+clog( Object.isExtensible(p) );
+p.n = 10;
+Point.prototype.k = 20;
+clog( p );
+                        </code></pre>                        
+                    </section>
+
+                    <section>
+                        <h2><span class="keyword">Object.seal()</span></h2>
+                        <p>Like <span class="keyword">Object.preventExtensions()</span>, but in addition it also makes all of the own properties nonconfigurable</p>
+                        <pre><code data-trim contenteditable data-add-run="js">
+var p = new Point(11, 22);
+
+clog( Object.isSealed(p) );
+Object.seal(p);
+clog( Object.isSealed(p) );
+                        </code></pre>                        
+                    </section>
+
+                    <section>
+                        <h2><span class="keyword">Object.freeze()</span></h2>
+                        <p>Like <span class="keyword">Object.seal()</span>, but in addition it also makes all of the own properties read only</p>
+                        <pre><code data-trim contenteditable data-add-run="js">
+var p = new Point(11, 22);
+
+clog( Object.isFrozen(p) );
+Object.freeze(p);
+clog( Object.isFrozen(p) );
+                        </code></pre>                        
+                    </section>
+
+                    <section>
+                        <h2>Serializing objects</h2>
+                        <pre><code data-trim contenteditable data-add-run="js">
+var p = new Point(11, 22);
+clog( p );
+clog( JSON.stringify(p) );
+
+Point.prototype.toJSON = function() { 
+    return {x: this.x+1, z: this.z+1} 
+};
+
+clog( JSON.stringify(p) );
+                        </code></pre>                        
                     </section>
 
                 </section>
                 <!-- Objects end -->
 
+                <!-- Constructors start -->
+
+                <section>
+                    <section>
+                        <h2>Constructors</h2>
+                        <p>Function used as a constructor</p>
+                        <pre><code data-trim contenteditable data-add-run="js">
+var p = new Point(11, 22);
+                        </code></pre>                        
+                    </section>
+
+                    <section>
+                        <h2>Constructors</h2>
+                        <p>What happens when function (<span class="keyword">Constructor</span>) is invoked with new keyword?</p>
+                        <ol style="width: 100%; font-size: 90%">
+                            <li class="fragment" data-fragment-index="1">The new empty object is created: <span class="keyword">{}</span></li>
+                            <li class="fragment" data-fragment-index="2">In <span class="keyword">Constructor</span> body <span class="keyword">this</span> is set to point to object from pt 1</li>
+                            <li class="fragment" data-fragment-index="3">The object prototype is set to <span class="keyword">Constructor.prototype</span></li>
+                            <li class="fragment" data-fragment-index="4">The object <span class="keyword">prototype.constructor</span> is set to <span class="keyword">Constructor</span></li>
+                            <li class="fragment" data-fragment-index="5"><span class="keyword">Constructor</span> body is executed</li>
+                            <li class="fragment" data-fragment-index="6">The object is returned</li>
+                        </ol>
+                    </section>
+
+                    <section>
+                        <h2>Constructors</h2>
+                        <img src="rzajac/js/js_proto.png" alt="js_proto">
+                    </section>
+
+                </section>
+                <!-- Constructors end -->
+
+                <!-- Inheritance start -->
+                <section>
+                    <h2>Inheritance</h2>
+                </section>
+                <!-- Inheritance end -->
 
                 <section>
                     <h2>END</h2>
