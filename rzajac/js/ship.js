@@ -1,32 +1,46 @@
-/**
- * Ship
- *
- * @param {string} name
- * @constructor
- */
-function Ship(name)
-{
-  this.name = name || 'Unnamed';
+var errAbstractClass = new Error("Can't instantiate abstract class!");
+var errAbstractMethod = new Error("Abstract method must be implemented by subclass!");
+
+function Vessel(name) {
+	if (this.constructor === Vessel) throw errAbstractClass;
+	this.name = name || "Unnamed";
 }
 
-Ship.prototype.getName = function() {
+Vessel.prototype.getName = function() {
 	return this.name;
-};
-
-function StarShip(name, maxSpeed)
-{
-	this.maxSpeed = maxSpeed;
-	Ship.call(this, name);
 }
 
-StarShip.prototype = Object.create(Ship.prototype);
-StarShip.prototype.constructor = StarShip;
-
-StarShip.prototype.getMaxSpeed = function() {
-	return this.maxSpeed;
+Vessel.prototype.getRange = function() {
+	throw errAbstractMethod;
 }
 
-var enterprise = new StarShip('Enterprise', 10);
 
-console.log(enterprise.getName());
-console.log(enterprise.getMaxSpeed());
+function Ship(name, range) {
+	Vessel.call(this, name);
+	this.range = range;
+}
+
+Ship.prototype = Object.create(Vessel.prototype);
+Ship.prototype.constructor = Ship;
+Ship.prototype.getRange = function() {
+	return this.range;
+}
+	
+function Submarine(name, range, maxDepth) {
+	Ship.call(this, name, range);
+	this.maxDepth = maxDepth;
+}
+
+Submarine.prototype = Object.create(Ship.prototype);
+Submarine.prototype.constructor = Submarine;
+
+Submarine.prototype.getMaxDepth = function() {
+	return this.maxDepth;
+}
+
+var wilk = new Submarine("ORP Wilk", 3500, 300);
+
+console.log(className(wilk));
+console.log(wilk.getRange());
+console.log(wilk.getMaxDepth());
+console.log(wilk.getName());
